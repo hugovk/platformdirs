@@ -6,9 +6,10 @@ import os
 import re
 import sys
 from functools import lru_cache
-from typing import TYPE_CHECKING, cast
 
 from .api import PlatformDirsABC
+
+TYPE_CHECKING = False
 
 
 class Android(PlatformDirsABC):
@@ -23,6 +24,8 @@ class Android(PlatformDirsABC):
     @property
     def user_data_dir(self) -> str:
         """:return: data directory tied to the user, e.g. ``/data/user/<userid>/<packagename>/files/<AppName>``"""
+        from typing import cast  # noqa: PLC0415
+
         return self._append_app_name_and_version(cast(str, _android_folder()), "files")
 
     @property
@@ -36,6 +39,8 @@ class Android(PlatformDirsABC):
         :return: config directory tied to the user, e.g. \
         ``/data/user/<userid>/<packagename>/shared_prefs/<AppName>``
         """
+        from typing import cast  # noqa: PLC0415
+
         return self._append_app_name_and_version(cast(str, _android_folder()), "shared_prefs")
 
     @property
@@ -46,6 +51,8 @@ class Android(PlatformDirsABC):
     @property
     def user_cache_dir(self) -> str:
         """:return: cache directory tied to the user, e.g.,``/data/user/<userid>/<packagename>/cache/<AppName>``"""
+        from typing import cast  # noqa: PLC0415
+
         return self._append_app_name_and_version(cast(str, _android_folder()), "cache")
 
     @property
@@ -125,6 +132,8 @@ def _android_folder() -> str | None:  # noqa: C901
     if not TYPE_CHECKING:
         try:
             # First try to get a path to android app using python4android (if available)...
+            from typing import cast  # noqa: PLC0415
+
             from android import mActivity  # noqa: PLC0415
 
             context = cast("android.content.Context", mActivity.getApplicationContext())  # noqa: F821

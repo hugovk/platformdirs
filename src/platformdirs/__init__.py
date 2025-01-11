@@ -9,14 +9,14 @@ from __future__ import annotations
 
 import os
 import sys
-from typing import TYPE_CHECKING
 
 from .api import PlatformDirsABC
 from .version import __version__
 from .version import __version_tuple__ as __version_info__
 
+TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from pathlib import Path
+    from pathlib import Path  # noqa: TCH003
     from typing import Literal
 
 if sys.platform == "win32":
@@ -42,11 +42,14 @@ def _set_platform_dir_class() -> type[PlatformDirsABC]:
     return _Result
 
 
-if TYPE_CHECKING:
+PlatformDirs = (
     # Work around mypy issue: https://github.com/python/mypy/issues/10962
-    PlatformDirs = _Result
-else:
-    PlatformDirs = _set_platform_dir_class()  #: Currently active platform
+    _Result
+    if TYPE_CHECKING
+    # Currently active platform
+    else _set_platform_dir_class()
+)
+
 AppDirs = PlatformDirs  #: Backwards compatibility with appdirs
 
 
