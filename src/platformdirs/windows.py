@@ -5,10 +5,10 @@ from __future__ import annotations
 import os
 import sys
 from functools import lru_cache
-from typing import TYPE_CHECKING
 
 from .api import PlatformDirsABC
 
+TYPE_CHECKING = False
 if TYPE_CHECKING:
     from collections.abc import Callable
 

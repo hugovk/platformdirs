@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import os.path
 import sys
-from typing import TYPE_CHECKING
 
 from .api import PlatformDirsABC
 
+TYPE_CHECKING = False
 if TYPE_CHECKING:
     from pathlib import Path
 
